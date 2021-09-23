@@ -9,7 +9,7 @@ The content is presented in two formats:
 - *.md  - to read in GitLab directly - [click here to read markdown TODO]()
 - *.pdf - to read offline or print - [click here to read pdf TODO]()
 
-Click here to read [by chapters TODO]().
+Click here to read [by chapters](https://gitlab.com/Winston-90/unsupervised_algorithms/-/tree/main/chapters).
 
 ## Download pdf
 
