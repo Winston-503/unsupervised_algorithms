@@ -2,7 +2,7 @@
 
 ## Introduction
 
-*Unsupervised learning* is a machine learning technique in which the programmers do not need to supervise the model. Instead, it allows the model to work on its own to discover patterns and information that was previously undetected. It mainly deals with the unlabelled data, while supervised learning, as we remember, deals with labeled data.
+*Unsupervised learning* is a machine learning technique in which developers don't need to supervise the model. Instead, it allows the model to work on its own to discover patterns and information that was previously undetected. It mainly deals with the unlabeled data, while supervised learning, as we remember, deals with labeled data.
 
 | ![supervised_vs_unsupervised.jpg](../img/supervised_vs_unsupervised.jpg) |
 |:--:|
@@ -35,7 +35,7 @@ Algorithms for solving these tasks and that we will mention in this article are:
 Dimensionality reduction refers to techniques that *reduce the number of input variables* in a dataset.
 More input features often make a predictive modeling task more challenging to model, what is known as **the Curse of Dimensionality**.
 
-In the example below the task is to reduce the number of input features (unroll swissroll from 3D to 2D) and save the largest ratio of information at the same time. This is the essence of this task and these algorithms.
+In the example below the task is to reduce the number of input features (unroll swissroll from 3D to 2D) and save the largest ratio of information at the same time. This is the essence of the dimensionality reduction task and these algorithms.
 
 | ![dimensionality_reduction.jpg](../img/dimensionality_reduction.jpg) |
 |:--:|
@@ -81,7 +81,7 @@ These algorithms are reducing the dimensionality *while saving distances between
 
 - **Isomap**
   
-  Isomap (short for *Isometric Mapping*) сreates a graph by connecting each instance to it's nearest neighbors, and then reduces dimensionality while trying to preserve the *geodesic distances* (distance between two vertices in a graph) between the instances.
+  Isomap (short for *Isometric Mapping*) сreates a graph by connecting each instance to its nearest neighbors, and then reduces dimensionality while trying to preserve the *geodesic distances* (distance between two vertices in a graph) between the instances.
 
 - **t-SNE**
   
@@ -109,7 +109,7 @@ As for other algorithms, there are a lot of different variations, like:
 
 First of all make sure you scaled the data. Almost all dimensionality reduction algorithms require that.
 
-If you reduce dimensionality for *data visualization*, you should try **t-SNE** first of all.
+If you reduce dimensionality for *data visualization*, you should try **t-SNE** first.
 
 If you have a lot of data, **autoencoders** can help you to find very complex latent representations. 
 
@@ -192,12 +192,12 @@ Clustering is used in a wide variety of applications, including these:
 - For anomaly detection - instance, that doesn't belong to any cluster can be considered an anomaly
 - Customer segmentation, recommender systems, search engines, image segmentation etc.
 
-All clustering algorithms **requires data preprocessing and standartization**.
+All clustering algorithms **requires data preprocessing and standardization**.
 Most clustering algorithms perform worse with a large number of features, so it is sometimes recommended to use methods of *dimensionality reduction* before clustering.
 
 ### K-Means
 
-Algorithm starts with random (or not random) *centroids* initializations, which are used as the beginning points for every cluster. After that we iteratively do the following:
+Algorithm starts with random (or not random) *centroids* initializations, which are used as the beginning points for every cluster. After that, we iteratively do the following:
 - Assign the observations a cluster number with the nearest center, and
 - Move the cluster centroids to the new average value of the cluster elements.
 
@@ -207,7 +207,7 @@ Algorithm starts with random (or not random) *centroids* initializations, which 
 
 To choose a good number of clusters we can use *sum of squared distances from points to cluster centroids* as metric and choose the number when this metric stopped falling fast. Other metrics that can be used - *inertia* or *silhouette*.
 
-Speeded version of this algorithm is **Mini Batch K-Means**, when we use a random subsample of the dataset instead of the whole dataset for calculations. There are a lot of other modifications, many of which are implemented in *scikit-learn*.
+Speeded version of this algorithm is **Mini Batch K-Means**, when we use a random subsample of the dataset instead of the whole dataset for calculations. There are a lot of other modifications, many of which are implemented in *sklearn*.
 
 **Pros**:
 + Simple and intuitive
@@ -244,7 +244,7 @@ This family of algorithms requires calculating the distance between clusters. Fo
 
 ### Spectral Clustering
 
-This algorithm takes a similarity matrix between the instances and creates a low-dimensional embedding from it (i.e., reduces it's dimensionality), and then uses another clustering algorithm in this low-dimensional space (*sklearn* implementation uses K-Means).
+This algorithm takes a similarity matrix between the instances and creates a low-dimensional embedding from it (i.e., reduces its dimensionality), and then uses another clustering algorithm in this low-dimensional space (*sklearn* implementation uses K-Means).
 
 | ![spectral_clustering.jpg](../img/spectral_clustering.jpg) |
 |:--:|
@@ -267,7 +267,7 @@ DBSCAN stands for *Density-Based Spatial Clustering of Applications with Noise*.
 The DBSCAN algorithm views clusters as areas of high density separated by areas of low density.
 The central component to the DBSCAN is the concept of *core samples*, which are samples that are in areas of high density. A cluster is therefore a set of core samples, each close to each other and a set of non-core samples that are close to a core sample. Other samples are defined as outliers (or anomalies).
 
-An extension or generalization of the DBSCAN algorithm is the **OPTICS** algorithm (Ordering Points To Identify the Clustering Structure).
+An extension or generalization of the DBSCAN algorithm is the **OPTICS** algorithm (*Ordering Points To Identify the Clustering Structure*).
 
 **Pros**:
 + You don't need to specify the number of clusters
@@ -279,7 +279,7 @@ An extension or generalization of the DBSCAN algorithm is the **OPTICS** algorit
 
 ### Affinity Propagation
 
-Affinity Propagation creates clusters by sending messages between pairs of samples until convergence. A dataset is then described using a small number of examples (standart representatives), which are identified as those most representative of other samples.
+Affinity Propagation creates clusters by sending messages between pairs of samples until convergence. A dataset is then described using a small number of examples (standard representatives), which are identified as those most representative of other samples.
 
 | ![affinity_propagation.jpg](../img/affinity_propagation.jpg) |
 |:--:|
@@ -289,7 +289,7 @@ Unfortunately, this algorithm has a computational complexity of O(m^2), so it to
 
 **Pros**:
 + You don't need to specify the number of clusters
-+ As a result of the algorithm we have standart representatives of a cluster. Unlike K-Means these representatives are not just mean values, but real objects from the train set.
++ As a result of the algorithm we have standard representatives of a cluster. Unlike K-Means, these representatives are not just mean values, but real objects from the train set.
  
 **Cons**:
 - Computational complexity of O(m^2), so it too is not suited for large datasets
