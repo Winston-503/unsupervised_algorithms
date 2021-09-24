@@ -1,5 +1,7 @@
 # Unsupervised Learning algorithms cheat sheet
 
+![unsupervised_preview.jpg](../img/unsupervised_preview.jpg)
+
 This repository provides cheat sheets for different unsupervised learning machine learning concepts and algorithms.
 This is not a complete tutorial, but it can help you better understand the structure of machine learning or to refresh your memory.
 
