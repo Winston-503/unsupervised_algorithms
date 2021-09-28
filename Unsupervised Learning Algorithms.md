@@ -32,8 +32,7 @@ Algorithms for solving these tasks and that we will mention in this article are:
 
 ## Dimensionality Reduction
 
-Dimensionality reduction refers to techniques that *reduce the number of input variables* in a dataset.
-More input features often make a predictive modeling task more challenging to model, what is known as **the Curse of Dimensionality**.
+Dimensionality reduction algorithms represent techniques that *reduce the number of features* (not samples) in a dataset. 
 
 In the example below the task is to reduce the number of input features (unroll swissroll from 3D to 2D) and save the largest ratio of information at the same time. This is the essence of the dimensionality reduction task and these algorithms.
 
@@ -41,33 +40,39 @@ In the example below the task is to reduce the number of input features (unroll 
 |:--:|
 | <b>Dimensionality Reduction Example. [Public Domain](https://commons.wikimedia.org/wiki/File:Lle_hlle_swissroll.png)</b>|
 
-High-dimensionality statistics and dimensionality reduction techniques are often used for *data visualization*. Nevertheless these techniques can be used in applied machine learning to simplify a classification or regression dataset in order to better fit a predictive model.
+Two main applications of dimensionality reduction algorithms are:
+- **Data Visualization** & **Data Analysis** - reduce the number of input features to three or two and use data visualization techniques to get insights about the data
+- **Preparatory tool for other machine learning algorithms**. More input features often make a prediction task more challenging to model, what is known as the **Curse of Dimensionality**. Since many algorithms (both from supervised and unsupervised learning (e.g. regression/classification, clustering)) do not work well with sparse or high-dimensional data, dimensionality reduction algorithms can greatly increase the quality. Often, this also provides faster and simpler calculations.
 
 Methods are commonly divided into:
 - **Feature Selection** - find a subset of the input features
-- **Feature Projection** (or *Feature Extraction*) - find optimal projection of the original data into some low-dimensional space 
+- **Feature Projection** (or *Feature Extraction*) - find the optimal projection of the original data into some low-dimensional space 
 
-Next we will talk about the second group of methods. Check *feature engineering* for more *feature selection* tools, e.g. LASSO regression, correlation analysis etc. In fact, the following algorithms can also be used as *feature selection* tools with the difference that these will no longer be the original features, but some of their modifications (for example linear combinations in case of *PCA*.)
+Next, we will talk about the second group of methods. Check *feature engineering* for more *feature selection* tools, e.g. LASSO regression, correlation analysis, etc. In fact, the following algorithms can also be used as *feature selection* tools with the difference that these will no longer be the original features, but some of their modifications (for example linear combinations in case of *PCA*).
 
 ### Principal Component Analysis
 
 To reduce the dimensionality, Principal Component Analysis (*PCA*) uses the projection of the original data into the *principal components*. 
-The principal components are orthogonal vectors that describe the maximum amount of residual variation (they are found using *Singular Value Decomposition (SVD)*).
+The principal components are orthogonal vectors that describe the maximum amount of *residual variation* (they are found using *Singular Value Decomposition*).
+
+| ![PCA.jpg](../img/PCA.jpg) |
+|:--:|
+| <b>PCA of a Gaussian distribution with two principal components. [Public Domain](https://en.wikipedia.org/wiki/Principal_component_analysis#/media/File:GaussianScatterPCA.svg)</b>|
 
 Thus, by choosing the first `N` principal components (where `N < M, M is the number of features`), we move from the M-dimensional space to the N-dimensional space, where new features are linear combinations of the existing features. 
 
-To select the number of components, the so-called *elbow method* is used.  Plot a graph of the cumulative sum of the explained variance and then select the number of components that explains the desired ratio of information (usually 80% or 95%).
+To select the number of components, the so-called *elbow method* is used. Plot a graph of the cumulative sum of the explained variance and then select the number of components that explains the desired ratio of information (usually 80% or 95%).
 
 PCA requires data scaling and centering (`sklearn.decomposition.PCA` class does it automatically).
 
-There are a lot of popular modifications of this algorithms, but the most popular are:
+There are a lot of popular modifications of these algorithms, but the most popular are:
 - *Incremental PCA* - for *online learning* or when data doesn't fit in memory
 - *Randomized PCA* - stochastic algorithm that allows to quickly estimate the first N components
-- *Kernel PCA* - *kernel trick* allows to perform complex nonlinear projections
+- *Kernel PCA* - *kernel trick* allows performing complex nonlinear projections
 
 ### Manifold Learning
 
-Manifold Learning algorithms are based in some distance measure conservation.
+Manifold Learning algorithms are based on some distance measure conservation.
 These algorithms are reducing the dimensionality *while saving distances between objects*.
 
 | ![manifold_learning.jpg](../img/manifold_learning.jpg) |
@@ -77,7 +82,7 @@ These algorithms are reducing the dimensionality *while saving distances between
 - **LLE**
   
   LLE (*Locally Linear Embedding*) studies the linear connections between data points in the original space, and then tries to move to a smaller dimensional space, while preserving within local neighborhoods.
-  There are a lot of modifications of this algorithm, like *Modified Locally Linear Embedding (MLLE)*, *Hessian-based LLE (HLLE)* and others.
+  There are a lot of modifications of this algorithm, like *Modified Locally Linear Embedding (MLLE)*, *Hessian-based LLE (HLLE)*, and others.
 
 - **Isomap**
   
@@ -86,11 +91,11 @@ These algorithms are reducing the dimensionality *while saving distances between
 - **t-SNE**
   
   t-SNE stands for *t-distributed Stochastic Neighbor Embedding*.
-  Reduces dimensionality with saving the relative distance between points in space - so it keeps similar instances close to each other and dissimilar instances apart. Most often used for data visualization.
+  Reduces dimensionality by saving the relative distance between points in space - so it keeps similar instances close to each other and dissimilar instances apart. Most often used for data visualization.
 
 ### Autoencoders
 
-We can use neural networks to do dimensionality reduction too. Autoencoder is a network that tries to output values that are as similar as possible to the inputs, when the network structure implies *a bottleneck* - a layer where the number of neurons is much fewer than in the input layer.
+We can use neural networks to do dimensionality reduction too. Autoencoder is a network that tries to output values that are as similar as possible to the inputs when the network structure implies *a bottleneck* - a layer where the number of neurons is much fewer than in the input layer.
 
 | ![autoencoder_structure.jpg](../img/autoencoder_structure.jpg) |
 |:--:|
@@ -101,13 +106,13 @@ Unfortunately, we have to have a lot of data. Fortunately, this data is unlabele
 
 As for other algorithms, there are a lot of different variations, like:
 - *Denoising Autoencoders* that can help clean up the images or sound
-- *Variational Autoencoders*. The latent space is in this case composed by a mixture of distributions instead of a fixed vector
-- *Concolutional Autoencoders* for images
-- *Reccurent Autoencoders* for time series or text
+- *Variational Autoencoders* that deal with distributions instead of specific values 
+- *Convolutional Autoencoders* for images
+- *Recurrent Autoencoders* for time series or text
 
 ### How to choose a dimensionality reduction algorithm?
 
-First of all make sure you scaled the data. Almost all dimensionality reduction algorithms require that.
+First of all, make sure you scaled the data. Almost all dimensionality reduction algorithms require that.
 
 If you reduce dimensionality for *data visualization*, you should try **t-SNE** first.
 
@@ -119,7 +124,7 @@ If you don't have a lot of data, try **PCA for linear** dimensionality reduction
 |:--:|
 | <b>Dimensionality Reduction Algorithm Selection. Image by Author</b>|
 
-Note, that almost every algorithm has many variations, and there are a lot of others less popular algorithms, like:
+Note, that almost every algorithm has many variations, and there are a lot of other less popular algorithms, like:
 - *Non-negative matrix factorization (NMF)*
 - *Random Projections*
 - *Linear Discriminant Analysis (LDA)*
