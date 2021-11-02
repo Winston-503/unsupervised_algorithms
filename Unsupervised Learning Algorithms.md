@@ -120,7 +120,7 @@ If you have a lot of data, **autoencoders** can help you to find very complex la
 
 If you don't have a lot of data, try **PCA for linear** dimensionality reduction and **manifold learning algorithms** (*LLE*, *Isomap* and others) **for non-linear dimensionality reduction**. 
 
-| ![dimensionality_reduction_algorithm_selection.JPG](../img/dimensionality_reduction_algorithm_selection.JPG) |
+| ![dimensionality_reduction_algorithm_selection.png](../img/dimensionality_reduction_algorithm_selection.png) |
 |:--:|
 | <b>Dimensionality Reduction Algorithm Selection. Image by Author</b>|
 
