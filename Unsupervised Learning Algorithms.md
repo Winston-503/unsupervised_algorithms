@@ -203,7 +203,7 @@ If you do anomaly detection not for data cleaning, first of all, try simple and 
 - **Gaussian Mixture Models** if you can assume that data were generated from a mixture of several Gaussian distributions
 - and so on.
 
-| ![anomaly_detection_algorithm_selection.JPG](../img/anomaly_detection_algorithm_selection.JPG) |
+| ![anomaly_detection_algorithm_selection.png](../img/anomaly_detection_algorithm_selection.png) |
 |:--:|
 | <b>Anomaly Detection Algorithm Selection. Image by Author</b>|
 
