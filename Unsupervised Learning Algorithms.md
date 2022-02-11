@@ -2,33 +2,37 @@
 
 ## Introduction
 
-*Unsupervised learning* is a machine learning technique in which developers don't need to supervise the model. Instead, this type of learning allows the model to work independently to discover hidden patterns and information that was previously undetected. It mainly deals with the unlabeled data, while supervised learning, as we remember, deals with labeled data.
+*Unsupervised learning* is a machine learning technique in which developers don't need to supervise the model. Instead, this type of learning allows the model to work independently *without any supervision* to discover hidden patterns and information that was previously undetected. It mainly deals with the *unlabeled data*, while supervised learning, as we remember, deals with labeled data.
 
 | ![supervised_vs_unsupervised.jpg](../img/supervised_vs_unsupervised.jpg) |
 |:--:|
 | <b>Supervised vs Unsupervised Learning. [Public Domain](https://commons.wikimedia.org/wiki/File:Machin_learning.png)</b>|
 
-The most popular unsupervised learning tasks are:
-- **Dimensionality Reduction** - task of reducing the number of input features in a dataset,
-- **Anomaly Detection** - the task of detecting instances that are very different from the norm,
-- **Clustering** - task of grouping similar instances into clusters.
+Three of the most popular unsupervised learning tasks are:
+- **Dimensionality Reduction** - the task of reducing the number of input features in a dataset,
+- **Anomaly Detection** - the task of detecting instances that are very different from the norm, and
+- **Clustering** - the task of grouping similar instances into clusters.
 
-The *Clustering* task is probably the most important in unsupervised learning, since it has many applications. At the same time *Dimensionality Reduction* and *Anomaly Detection* tasks can be attributed to auxiliary ones (they are often interpreted as *data cleaning* or *feature engineering* tools). Despite the fact that these tasks are definitely important, some people often do not distinguish them separately when studying unsupervised learning, leaving only the clustering task.   
+The *Clustering* task is probably the most important in unsupervised learning since it has a wide variety of applications. At the same time *Dimensionality Reduction* and *Anomaly Detection* tasks can be attributed to auxiliary ones (they are often interpreted as *data cleaning* or *feature engineering* tools). Despite the fact that these tasks are definitely important, some people often do not distinguish them separately when studying unsupervised learning, leaving only the clustering task.
+
+Each of these three tasks and the algorithms for solving them will be discussed in more detail later in the corresponding sections. However, note that the **Other Unsupervised Learning Tasks** section lists other less popular tasks that can also be attributed to unsupervised learning.
 
 Algorithms for solving these tasks and that we will mention in this article are:
 - *Dimensionality Reduction*:
-  - *Principal Component Analysis*
-  - *Manifold Learning* - *LLE*, *Isomap*, *t-SNE*
-  - *Autoencoders* and others
+  - *Principal Component Analysis*;
+  - *Manifold Learning* - *LLE*, *Isomap*, *t-SNE*;
+  - *Autoencoders* and others.
 - *Anomaly Detection*:
-  - *Isolation Forest*
-  - *Local Outlier Factor*
-  - *Minimum Covariance Determinant* and other algorithms from dimensionality reduction or supervised learning
+  - *Isolation Forest*;
+  - *Local Outlier Factor*;
+  - *Minimum Covariance Determinant* and other algorithms initially designed for dimensionality reduction or supervised learning.
 - *Clustering*:
-  - *K-Means*
-  - *Hierarchical Clustering* and *Spectral Clustering*
-  - *Gaussian Mixture Models*
-  - *DBSCAN*, *BIRCH* and others
+  - *K-Means*;
+  - *Hierarchical Clustering* and *Spectral Clustering*;
+  - *DBSCAN* and *OPTICS*;
+  - *Affinity Propagation*;
+  - *Mean Shift* and *BIRCH*;
+  - *Gaussian Mixture Models*;
 
 ## Dimensionality Reduction
 
@@ -209,186 +213,247 @@ If you do anomaly detection not for data cleaning, first of all, try simple and 
 
 ## Clustering
 
-Clustering is the task of dividing the population of unlabeled data points into a number of groups in such a way that objects in the same group (called *a cluster*) are more similar to each other than to those in other clusters.
+Clustering (also called *cluster analysis*) is a task of grouping similar instances into clusters. More formally, clustering is the task of grouping the population of **unlabeled data points** into clusters in a way that data points in the same cluster are more similar to each other than to data points in other clusters.
+
+The clustering task is probably the most important in unsupervised learning, since it has many applications, for example:
+- *data analysis*:  often a huge dataset contains several large clusters, analyzing which separately, you can come to interesting insights;
+- *anomaly detection*: as we saw before, data points located in the regions of low density can be considered as anomalies;
+- *semi-supervised learning*: clustering approaches often helps you to automatically label partially labeled data for classification tasks;
+- *indirectly clustering* tasks (tasks where clustering helps to gain good results): recommender systems, search engines, etc., and
+- *directly clustering* tasks: customer segmentation, image segmentation, etc.
 
 | ![clustering.jpg](../img/clustering.jpg) |
 |:--:|
-| <b>Clustering Algorithms by Scikit Learn. [Image Source](https://scikit-learn.org/0.15/auto_examples/cluster/plot_cluster_comparison.html)</b>|
+| <b>Clustering algorithms by Scikit Learn. [Image source](https://scikit-learn.org/0.15/auto_examples/cluster/plot_cluster_comparison.html)</b>|
 
-Clustering is used in a wide variety of applications, including these:
-- Semi-supervised learning
-- Data analysis - when analyzing a new dataset it can be helpful to run a clustering algorithm, and then analyze each cluster separately
-- For anomaly detection - instance, that doesn't belong to any cluster can be considered an anomaly
-- Customer segmentation, recommender systems, search engines, image segmentation etc.
-
-All clustering algorithms **requires data preprocessing and standardization**.
-Most clustering algorithms perform worse with a large number of features, so it is sometimes recommended to use methods of *dimensionality reduction* before clustering.
+All clustering algorithms **require data preprocessing and standardization**. Most clustering algorithms perform worse with a large number of features, so it is sometimes recommended to use methods of *dimensionality reduction* before clustering.
 
 ### K-Means
 
-Algorithm starts with random (or not random) *centroids* initializations, which are used as the beginning points for every cluster. After that, we iteratively do the following:
-- Assign the observations a cluster number with the nearest center, and
-- Move the cluster centroids to the new average value of the cluster elements.
+K-Means algorithm is based on the *centroid* concept. *Centroid* is a geometric center of a cluster (mean of coordinates of all cluster points). First, centroids are initialized randomly (this is the basic option, but there are other initialization techniques). After that, we iteratively do the two following steps, while centroids are moving:
+- *Update the clusters* - for each data point assign it a cluster number with the nearest centroid, and
+- *Update the clusters' centroids* - calculate the new mean value of the cluster elements to move centroids.
 
-| ![k-means.jpg](../img/k-means.jpg) |
+| ![k-means_convergence.gif](../img/k-means_convergence.gif) |
 |:--:|
-| <b>K-Means Clustering by Scikit Learn. [Image Source](https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_digits.html)</b>|
+| <b>Convergence of K-Means algorithm. [Public domain](https://en.wikipedia.org/wiki/K-means_clustering#/media/File:K-means_convergence.gif)</b>|
 
-To choose a good number of clusters we can use *sum of squared distances from points to cluster centroids* as metric and choose the number when this metric stopped falling fast. Other metrics that can be used - *inertia* or *silhouette*.
+The strengths and weaknesses of the algorithm are intuitive. It is simple and fast, but it requires initial knowledge about the number of clusters. It also does not detect clusters of complex shapes well and can result in a local solution. To choose a good number of clusters we can use a *sum of squared distances from data points to cluster centroids* as a metric and choose the number when this metric stops falling fast ([elbow method](https://en.wikipedia.org/wiki/Elbow_method_(clustering))). To find a globally optimal solution, you can run the algorithm several times and choose the best result (`n_init` parameter in *sklearn*).
 
-Speeded version of this algorithm is **Mini Batch K-Means**, when we use a random subsample of the dataset instead of the whole dataset for calculations. There are a lot of other modifications, many of which are implemented in *sklearn*.
+A speeded version of this algorithm is **Mini Batch K-Means**. In that case, we use a random subsample instead of the whole dataset for calculations. There are a lot of other modifications, and many of them are implemented in *sklearn*.
 
 **Pros**:
-+ Simple and intuitive
-+ Scales to large datasets
-+ As a result of the algorithm, we have a centroid that can be used as a standard representative of the cluster
++ Simple and intuitive;
++ Scales to large datasets;
++ As a result, we also have centroids that can be used as standard cluster representatives.
  
 **Cons**:
-- The number of clusters must be specified
-- Does not cope well with a very large number of features
-- Separates only convex and homogeneous clusters well
-- Can end up covering to poor solutions, so it needs to be run several times, keeping only the best solution (`n_init` parameter in *sklearn*)
+- Knowledge about the number of clusters is necessary and must be specified as a parameter;
+- Does not cope well with a very large number of features;
+- Separates only convex and homogeneous clusters well;
+- Can result in poor local solutions, so it needs to be run several times.
 
 ### Hierarchical Clustering
 
-Hierarchical clustering (sometimes **Hierarchical Cluster Analysis (HCA)** or **Agglomerative Clustering**) is a general family of clustering algorithms that build nested clusters by merging or splitting them successively. 
-This hierarchy of clusters is represented as a tree (or dendrogram). 
-The root of the tree is the unique cluster that gathers all the samples, and the leaves are the clusters with only one sample.
+Hierarchical clustering (also **Hierarchical Cluster Analysis (HCA)** or **Agglomerative Clustering**) is a family of clustering algorithms that build a hierarchy of clusters during the analysis. 
 
-| ![dendrogram.jpg](../img/dendrogram.jpg) |
+It is represented as a dendrogram (a tree diagram). The *root* of the tree (usually the upper or left element) is one large cluster cluster that contains all data points. The *leaves* (bottom or right elements) are tiny clusters, each of which contains only one data point. According to the generated dendrogram, you can choose the desired separation into any number of clusters.
+
+| ![dendrogram.png](../img/dendrogram.png) |
 |:--:|
-| <b>Hierarchical Clustering Dendrogram Example by Scikit Learn. [Image Source](https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_dendrogram.html)</b>|
+| <b>Hierarchical Clustering dendrogram example on the iris dataset. Adapted from a [public domain](https://commons.wikimedia.org/wiki/File:Iris_dendrogram.png)</b>|
 
-According to the generated dendrogram, you can choose desired separation into any number of clusters.
-This family of algorithms requires calculating the distance between clusters. For this purpose, different metrics are used, one of the most popular is **Ward distance**.
+This family of algorithms requires calculating the distance between clusters. Different metrics are used for this purpose (simple linkage, complete linkage, average linkage, centroid linkage, etc.), but one of the most effective and popular is **Ward's distance** or Ward's linkage.
+
+To learn more about the different methods of measuring the distance between clusters, start with this article:
+
+https://dataaspirant.com/hierarchical-clustering-algorithm/#:~:text=creates%20meaningful%20clusters.-,Difference%20ways%20to%20measure%20the%20distance%20between%20two%20clusters,-There%20are%20several
 
 **Pros**:
-+ Simple and intuitive
-+ Works well when data has a hierarchical structure
++ Simple and intuitive;
++ Works well when data has a hierarchical structure;
++ Knowledge about the number of clusters is not necessary.
   
 **Cons**:
-- The number of clusters must be specified
-- Greedy algorithm
-- Separates only convex and homogeneous clusters well
+- Requires additional analysis to choose the resulting number of clusters;
+- Separates only convex and homogeneous clusters well;
+- A greedy algorithm can result in poor local solutions.
 
 ### Spectral Clustering
 
-This algorithm takes a similarity matrix between the instances and creates a low-dimensional embedding from it (i.e., reduces its dimensionality), and then uses another clustering algorithm in this low-dimensional space (*sklearn* implementation uses K-Means).
+The spectral clustering approach is based on graph theory and linear algebra. This algorithm uses the *spectrum* (set of *eigenvalues*) of the *similarity matrix* (that contains the similarity of each pair of data points) to perform dimensionality reduction. Then it uses some of the clustering algorithms in this low-dimensional space (`sklearn.cluster.SpectralClustering` class uses K-Means).
 
-| ![spectral_clustering.jpg](../img/spectral_clustering.jpg) |
-|:--:|
-| <b>Spectral Clustering for image segmentation by Scikit Learn. [Image Source](https://scikit-learn.org/stable/auto_examples/cluster/plot_segmentation_toy.html)</b>|
+Due to the dimensionality reduction, this algorithm can detect complex cluster structures and shapes. It can also be used to search for clusters in graphs. However, due to its computational complexity, it does not work well with large datasets.
 
-Spectral clustering can capture complex cluster structures and it can also be used to cut graphs (e.g. to identify clusters of friends on a social network).
-
-Pros:
-+ Can capture complex cluster structures
-+ Can also be used to cut graphs
+**Pros**:
++ Can detect complex cluster structures and shapes;
++ Can be used to search for clusters in graphs.
   
-Cons:
-- Doesn't scale well large numbers of instances
-- Doesn't behave well when the clusters have very different sizes
+**Cons**:
+- Knowledge about the number of clusters is necessary and must be specified as a parameter;
+- Does not cope well with a very large number of instances;
+- Does not cope well when the clusters have very different sizes.
 
 ### DBSCAN
 
-DBSCAN stands for *Density-Based Spatial Clustering of Applications with Noise*.
+The DBSCAN abbreviation stands for *Density-Based Spatial Clustering of Applications with Noise*.
 
-The DBSCAN algorithm views clusters as areas of high density separated by areas of low density.
-The central component to the DBSCAN is the concept of *core samples*, which are samples that are in areas of high density. A cluster is therefore a set of core samples, each close to each other and a set of non-core samples that are close to a core sample. Other samples are defined as outliers (or anomalies).
+According to this algorithm, clusters are high-density regions (where the data points are located close to each other) separated by low-density regions (where the data points are located far from each other).
+
+The central concept of the DBSCAN algorithm is the idea of a *core sample*, which means a sample located in an area of high density. Data point A is considered a core sample if at least `min_samples` other instances (usually including A) are located within `eps` distance from A.
+
+| ![DBSCAN_core_samples.png](../img/DBSCAN_core_samples.png) |
+|:--:|
+| <b>DBSCAN core samples example. min_samples=4, core samples marked in red. [Public domain](https://en.wikipedia.org/wiki/File:DBSCAN-Illustration.svg)</b>|
+
+Therefore, a cluster is a group of core samples located close to each other and some non-core samples located close to core samples. Other samples are defined as outliers (or anomalies) and do not belong to any cluster. This approach is called **density-based clustering**. It allows you not to specify the number of clusters as a parameter and find clusters of complex shapes.
+
+| ![DBSCAN.png](../img/DBSCAN.png) |
+|:--:|
+| <b>DBSCAN clustering. [Public domain](https://commons.wikimedia.org/wiki/File:DBSCAN-density-data.svg)</b>|
 
 An extension or generalization of the DBSCAN algorithm is the **OPTICS** algorithm (*Ordering Points To Identify the Clustering Structure*).
 
 **Pros**:
-+ You don't need to specify the number of clusters
-+ Solves the anomaly detection task at the same time
++ Knowledge about the number of clusters is not necessary;
++ Also solves the *anomaly detection* task.
  
 **Cons**:
-- Need to select the density parameter
-- Does not cope well with a sparse data
+- Need to select and tune the density parameter (`eps`);
+- Does not cope well with sparse data.
 
 ### Affinity Propagation
 
-Affinity Propagation creates clusters by sending messages between pairs of samples until convergence. A dataset is then described using a small number of examples (standard representatives), which are identified as those most representative of other samples.
+The Affinity Propagation algorithm also does not require knowledge about the number of clusters. But unlike DBSCAN, which is a *density-based* clustering algorithm, affinity propagation is based on the idea of *passing messages between data points*. Calculating pairwise similarity based on some distance function (i.e. *Euclidean distance*) this algorithm then converges in some number of *standard representatives*. A dataset is then described using this small number of *standard representatives*, which are identified as the most representative instances on the particular cluster. 
 
 | ![affinity_propagation.jpg](../img/affinity_propagation.jpg) |
 |:--:|
-| <b>Affinity Propagation Clustering by Scikit Learn. [Image Source](https://scikit-learn.org/stable/auto_examples/cluster/plot_affinity_propagation.html)</b>|
+| <b>Affinity Propagation clustering by Scikit Learn. [Image source](https://scikit-learn.org/stable/auto_examples/cluster/plot_affinity_propagation.html)</b>|
 
-Unfortunately, this algorithm has a computational complexity of O(m^2), so it too is not suited for large datasets.
+The results of this algorithm often leave much to be desired, but it has a number of strong advantages. However, its main disadvantage, the computational complexity (caused by the need to calculate the distance for *all possible pairs of data points*) does not allow it to be used on large datasets.
 
 **Pros**:
-+ You don't need to specify the number of clusters
-+ As a result of the algorithm we have standard representatives of a cluster. Unlike K-Means, these representatives are not just mean values, but real objects from the train set.
++ Knowledge about the number of clusters is not necessary;
++ As a result, we also have *standard representatives* of a cluster. Unlike K-Means centroids, these instances are not just average values, but real objects from the dataset.
  
 **Cons**:
-- Computational complexity of O(m^2), so it too is not suited for large datasets
-- Separates only convex and homogeneous clusters well
-- Usually works worse than other algorithms
+- Works much slower than other algorithms due to computational complexity;
+- Does not cope well with a large number of instances;
+- Separates only convex and homogeneous clusters well.
 
 ### Mean Shift
 
-This algorithm starts by placing a circle centered on each instance, then for each circle it computes the mean of all the instances located within it, and it shifts the circle so that it is centered on the mean. Next, it iterates this mean-shifting step until all the circles stop moving.
+The Mean Shift algorithm first places a circle of a certain size (radius of the circle is a parameter called `bandwidth`) in the center of each data point. After that, it iteratively calculates the *mean* for each circle (the average coordinates among the points inside the circle) and *shifts* it. These *mean-shift* steps are performed until the algorithm converges and the circles stop moving.
 
-Mean Shift shifts the circles in the direction of higher density, until each of them has found a local density minimum. Finally, all the instances whose circles have settled in the same place (or close enough) are assigned to the same cluster. Mean Shift has some of the features of DBSCAN, because it's based on density too.
+You can see Mean Shift algorithm visualization here:
+
+http://primo.ai/index.php?title=Mean-Shift_Clustering
+
+Mean Shift converges into local regions with maximum density. Then all the circles that are close enough enough to each other form a cluster. Therefore, at the same time, it solves the *density estimation* task and calculates cluster centroids.
+
+As DBSCAN, this algorithm represents a **density-based approach** so works badly with sparse data.
 
 **Pros**:
-+ You don't need to specify the number of clusters
-+ Have just one hyperparameter - the radius of the circles, called *bandwidth*
++ Knowledge about the number of clusters is not necessary;
++ Have just one hyperparameter: the radius of the circles;
++ Solves *density estimation* task and calculate cluster centroids;
++ Does not find a cluster structure where it is not actually present.
  
 **Cons**:
-- Does not cope well with a sparse data
-- Tends to chop clusters into pieces when they have internal density variations
-- Computational complexity of O(m^2), so it too is not suited for large datasets
+- Does not cope well with sparse data and with a large number of features;
+- Does not cope well with a large number of instances;
+- Does not cope well with clusters of complex shapes: tends to chop these clusters into pieces.
 
 ### BIRCH
 
-The BIRCH stands for *Balanced Iterative Reducing and Clustering using Hierarchies*. This algorithm was designed specifically for very large datasets, and it can be faster than batch K-Means, with similar results, as long as the number of features is not too large (<20). During training, it builds a tree structure containing just enough information to quickly assign each new instance to a cluster, without having to store all the instances in the tree: this approach allows it to use limited memory, while handling huge datasets.
+The BIRCH stands for *Balanced Iterative Reducing and Clustering using Hierarchies*. 
+
+This hierarchical clustering algorithm was designed specifically for large datasets. In the majority of cases, it has a computational complexity of *O(n)*, so requires only one scan of the dataset.
+
+During training, it creates a dendrogram containing enough information to quickly assign each new data instance to some cluster without having to store information about all instances in memory. These principles allow getting the best quality for a given set of memory and time resources compared with other clustering algorithms. They also allow to incrementally cluster incoming data instances performing *online learning*.
 
 **Pros**:
-+ Was designed specifically for very large datasets when number of features is not too large (<20)
-+ Allows it to use limited memory, while handling huge datasets
++ Was designed specifically for very large datasets;
++ Show the best quality for a given set of memory and time resources;
++ Allows implementing online clustering.
 
 **Cons**:
-- The number of clusters must be specified
-- Does not cope well with a high-dimensional data
+- Does not cope well with a large number of features.
 
 ### Gaussian Mixture Models
 
-Gaussian Mixture Models (*GMM*) is a probabilistic model that can solve both *Clustering* and *Anomaly detection*/*Density Estimation* unsupervised learning tasks.
+Gaussian Mixture Models (*GMM*) is a probabilistic algorithm that can solve as many as three unsupervised learning tasks: *clustering*, *density estimation*, and *anomaly detection*.
 
-This method relies on the *Expectation Maximization (EM)* algorithm and assumes that the data instances were generated from a mixture of several Gaussian distributions whose parameters are unknown.
+This method is based on the *Expectation Maximization* algorithm and assumes that data points were generated from a group (*mixture*) of Gaussian distributions. This algorithm can result in poor local solutions, so it needs to be run several times keeping only the best solution (`n_init` parameter in *sklearn*).
+
+It is known that in the general case the Gaussian distribution has two parameters: a vector of the *mean* (μ) and a matrix of *variance* (σ^2). Then, if it is known that the data can be divided into `N` clusters in `M`-dimensional space, the task of the algorithm is to select `N` μ vectors (with `M` elements) and `N` σ^2 matrices (with `MxM` elements). 
+
+In the case of one-dimensional space, both μ and σ^2 are scalars (single numbers).
+
+| ![normal_distributions.png](../img/normal_distributions.png) |
+|:--:|
+| <b>Gaussian (normal) distribution with different parameters in one-dimensional space. [Public domain](https://commons.wikimedia.org/wiki/File:Normal_distribution_pdf.png)</b>|
+
+In the image below you can see two distributions in two-dimensional space. Each of the distributions has the following parameters:
+- two values for the mean vectors (x and y coordinates);
+- four values for the variance matrices (variances in main diagonal and covariances in the other elements).
 
 | ![GMM.jpg](../img/GMM.jpg) |
 |:--:|
-| <b>Density Estimation with GMM by Scikit Learn. [Image Source](https://scikit-learn.org/stable/auto_examples/mixture/plot_gmm_pdf.html)</b>|
+| <b>GMM example by Scikit Learn. [Image source](https://scikit-learn.org/stable/auto_examples/mixture/plot_gmm_pdf.html)</b>|
 
-To choose a good number of clusters we can use *BIC* (Bayesian information criterion) or *AIC* (Akaike information criterion) and choose the model with minimum value. On the other hand, **Bayesian GMM** can be used - this model can detect the number of clusters itself and requires only a value that is greater than the optimal number of clusters.
+To choose a good number of clusters you can use *BIC* or *AIC* (Bayesian / Akaike information criterion) as metrics and choose the model with its minimum value. On the other hand, you can use the **Bayesian GMM** algorithm. This model only requires a value that is greater than the possible number of clusters and can detect the optimal number itself.
 
-The Gaussian Mixture Model is a *generative model*, meaning you can sample new instances from it. It is also possible to estimate the density of the model at any given location.
+Also, the Gaussian Mixture Model is a *generative model*, meaning that you can sample new instances from it. It is also possible to estimate the density of the model at any given location.
 
-Pros:
-+ Perfectly deals with data instances that were generated from a mixture of Gaussian distributions with different shapes and sizes
-+ At the same time solves *density estimation* task
-+ Is a *generative model*
+**Pros**:
++ Perfectly deals with datasets that were generated from a mixture of Gaussian distributions with different shapes and sizes;
++ At the same time solves *density estimation* and *anomaly detection* tasks;
++ Is a *generative model*, so can generate new instances.
  
-Cons:
-- The number of clusters must be specified (not in case of *Bayesian GMM*)
-- *Expectation Maximization* algorithm can end up covering to poor solutions, so it needs to be run several times, keeping only the best solution (`n_init` parameter in *sklearn*)
-- Does not scale well large numbers of features
-- Assume that data instances were generated from a mixture of Gaussian distributions, so cope bad with data of other shape
+**Cons**:
+- Knowledge about the number of clusters is necessary and must be specified as a parameter (not in the case of *Bayesian GMM*);
+- *Expectation Maximization* algorithm can result in poor local solutions, so it needs to be run several times;
+- Does not scale well with large numbers of features;
+- Assume that data instances were generated from a mixture of Gaussian distributions, so cope badly with data of other shapes.
 
 ### How to choose a clustering algorithm?
 
-As you can see, clustering task is quite difficult and have a wide variety of applications, so it's almost impossible to build some universal set of rules to select a clustering algorithm - all of them have advantages and disadvantages.
+As you can see, the clustering task is quite difficult and have a wide variety of applications, so it's almost impossible to build some universal set of rules to select a clustering algorithm - all of them have advantages and disadvantages.
 
-Things become better when you have some assumptions about your data, so *data analysis* can help you with that. What is the approximate number of clusters? Are they located far from each other or do they intersect? Are they similar in shape and density? All that information can help you to solve your task better.
+Things become better when you have **some assumptions about your data**, so *data analysis* can help you with that. What is the approximate number of clusters? Are they located far from each other or do they intersect? Are they similar in shape and density? All that information can help you to solve your task better.
 
-If the number of clusters is unknown, a good initial approximation is *the square root of the number of objects*. You can also first run an algorithm that does not require a number of clusters (*DBSCAN* or *Affinity Propagation*) and start from this number.
+If the number of clusters is unknown, a good initial approximation is *the square root of the number of objects*. You can also first run an algorithm that does not require a number of clusters as a parameter (*DBSCAN* or *Affinity Propagation*) and use the resulting value as a starting point.
 
-But the most important question remains the evaluation of quality - you can try all the algorithms, but how to understand which one is the best? There are a great many metrics for this - from *homogeneity* and *completeness* to *silhouette* - they show themselves differently in different tasks.
+Another important question remains the evaluation of quality - you can try all the algorithms, but how to decide which one is the best? There are a great many metrics for this - from *homogeneity* and *completeness* to *silhouette* - they show themselves differently in different tasks. Understanding these metrics and how to use them successfully comes with experience and goes beyond the scope of this article.
+
+## Other Unsupervised Learning Tasks
+
+Although dimensionality reduction, anomaly detection, and clustering are the main and the most popular unsupervised learning tasks, there are others. 
+
+Since the definition is blurry, any algorithm that deals with an unlabeled dataset can be considered solving some unsupervised learning task (for example calculating the mean or applying Student's t-test). However, researchers often identify two other tasks among others: *Density Estimation* and *Association Rule Learning*.
+
+### Density Estimation
+
+I have already briefly mentioned density estimation in the anomaly detection section.
+
+Density Estimation is the task of estimating the density of the distribution of data points. More formally, it estimates the *probability density function* (PDF) of the random process that is generated by the given dataset. This task historically came from statistics, when it was necessary to estimate the PDF of some random variable and can be solved using statistical approaches. 
+
+In the modern era, it is used mostly for *data analysis* and as an auxiliary tool for *anomaly detection* - data points located in regions of low density are more likely to be anomalies or outliers. Now it is usually solved with *density-based clustering* algorithms such as **DBSCAN** or **Mean Shift**, and using *Expectation-Maximization* algorithm and **Gaussian Mixture Models**.
+
+### Association Rule Learning
+
+Association Rule Learning (also called *Association Rules* or simply *Association*) is another unsupervised learning task. It is most often used in business analysis to maximize profits.
+
+It aims to detect unobvious relationships between variables in a dataset, so also can be considered as a *data analysis* tool. There are many complex algorithms to solve it, but the most popular are:
+- **Apriori** - based on breadth-first search;
+- **Eclat** (*Equivalence Class Transformation*) - based on depth-first search; and
+- **FP-Growth** - designed to detect frequently occurring patterns in the data.
+
+A common example of such a task is *product placement*. For example,  knowing that people often buy onions together with potatoes in supermarkets, it makes sense to place them side by side to increase sales. Therefore, associative rules are used in promotional pricing, marketing, continuous production, etc. 
 
 ## Conclusions
 
-In this article I tried to describe all main unsupervised learning tasks and algorithms and give you a big picture of dimensionality reduction, anomaly detection and clustering.
+In this article, I tried to describe all the main unsupervised learning tasks and algorithms and give you a big picture of unsupervised learning.
 
 I hope that these descriptions and recommendations will help you and motivate you to learn more and go deeper into machine learning.
