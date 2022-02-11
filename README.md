@@ -29,7 +29,11 @@ The following tasks and algorithms are mentioned:
   - *Local Outlier Factor*
   - *Minimum Covariance Determinant* and other algorithms from dimensionality reduction or supervised learning
 - *Clustering*:
-  - *K-Means*
-  - *Hierarchical Clustering* and *Spectral Clustering*
-  - *Gaussian Mixture Models*
-  - *DBSCAN*, *BIRCH* and others
+  - *K-Means*;
+  - *Hierarchical Clustering* and *Spectral Clustering*;
+  - *DBSCAN* and *OPTICS*;
+  - *Affinity Propagation*;
+  - *Mean Shift* and *BIRCH*;
+  - *Gaussian Mixture Models*.
+- *Density Estimation*;
+- *Association Rule Learning*.
